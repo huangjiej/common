@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hummingbird.commonbiz.mapper.MobileMonthLimitMapper" >
+  <resultMap id="BaseResultMap" type="com.hummingbird.commonbiz.entity.MobileMonthLimit" >
+    <id column="idt_mobile_monthlimit" property="idtMobileMonthLimit" jdbcType="INTEGER" />
+    <result column="sellerId" property="sellerId" jdbcType="VARCHAR" />
+    <result column="buyerId" property="buyerId" jdbcType="VARCHAR" />
+    <result column="month" property="month" jdbcType="TIMESTAMP" />
+    <result column="used" property="used" jdbcType="INTEGER" />
+    <result column="locker" property="locker" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    idt_mobile_monthlimit, sellerId, buyerId, month, used, locker
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_mobile_monthlimit
+    where idt_mobile_monthlimit = #{idtMobileMonthLimit,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_mobile_monthlimit
+    where idt_mobile_monthlimit = #{idtMobileMonthLimit,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hummingbird.commonbiz.entity.MobileMonthLimit" >
+    insert into t_mobile_monthlimit (idt_mobile_monthlimit, sellerId, buyerId, 
+      month, used, locker
+      )
+    values (#{idtMobileMonthLimit,jdbcType=INTEGER}, #{sellerId,jdbcType=VARCHAR}, #{buyerId,jdbcType=VARCHAR}, 
+      #{month,jdbcType=TIMESTAMP}, #{used,jdbcType=INTEGER}, #{locker,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hummingbird.commonbiz.entity.MobileMonthLimit" >
+    insert into t_mobile_monthlimit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idtMobileMonthLimit != null" >
+        idt_mobile_monthlimit,
+      </if>
+      <if test="sellerId != null" >
+        sellerId,
+      </if>
+      <if test="buyerId != null" >
+        buyerId,
+      </if>
+      <if test="month != null" >
+        month,
+      </if>
+      <if test="used != null" >
+        used,
+      </if>
+      <if test="locker != null" >
+        locker,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idtMobileMonthLimit != null" >
+        #{idtMobileMonthLimit,jdbcType=INTEGER},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=TIMESTAMP},
+      </if>
+      <if test="used != null" >
+        #{used,jdbcType=INTEGER},
+      </if>
+      <if test="locker != null" >
+        #{locker,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hummingbird.commonbiz.entity.MobileMonthLimit" >
+    update t_mobile_monthlimit
+    <set >
+      <if test="sellerId != null" >
+        sellerId = #{sellerId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        buyerId = #{buyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="month != null" >
+        month = #{month,jdbcType=TIMESTAMP},
+      </if>
+      <if test="used != null" >
+        used = #{used,jdbcType=INTEGER},
+      </if>
+      <if test="locker != null" >
+        locker = #{locker,jdbcType=INTEGER},
+      </if>
+    </set>
+    where idt_mobile_monthlimit = #{idtMobileMonthLimit,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hummingbird.commonbiz.entity.MobileMonthLimit" >
+    update t_mobile_monthlimit
+    set sellerId = #{sellerId,jdbcType=VARCHAR},
+      buyerId = #{buyerId,jdbcType=VARCHAR},
+      month = #{month,jdbcType=TIMESTAMP},
+      used = #{used,jdbcType=INTEGER},
+      locker = #{locker,jdbcType=INTEGER}
+    where idt_mobile_monthlimit = #{idtMobileMonthLimit,jdbcType=INTEGER}
+  </update>
+    <update id="addQuota" parameterType="com.hummingbird.commonbiz.entity.MobileMonthLimit" >
+    update t_mobile_monthlimit
+    set used = used+1,locker=locker+1
+    where sellerId = #{sellerId,jdbcType=VARCHAR} 
+    and buyerId = #{buyerId,jdbcType=VARCHAR} 
+    and DATE_FORMAT(month,'%Y-%M')= DATE_FORMAT(#{month,jdbcType=TIMESTAMP},'%Y-%M')
+    and locker = #{locker,jdbcType=INTEGER}
+  </update>
+  <select id="selectByQuota" resultMap="BaseResultMap" parameterType="com.hummingbird.commonbiz.entity.MobileMonthLimit" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_mobile_monthlimit
+    where sellerId = #{sellerId,jdbcType=VARCHAR} 
+    and buyerId = #{buyerId,jdbcType=VARCHAR} 
+    and DATE_FORMAT(month,'%Y-%M')= DATE_FORMAT(#{month,jdbcType=TIMESTAMP},'%Y-%M')
+  </select>
+
+</mapper>

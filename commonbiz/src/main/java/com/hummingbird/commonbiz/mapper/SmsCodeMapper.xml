@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hummingbird.commonbiz.mapper.SmsCodeMapper" >
+  <resultMap id="BaseResultMap" type="com.hummingbird.commonbiz.entity.SmsCode" >
+    <result column="mobileNum" property="mobilenum" jdbcType="VARCHAR" />
+    <result column="appId" property="appid" jdbcType="VARCHAR" />
+    <result column="smsCode" property="smscode" jdbcType="VARCHAR" />
+    <result column="expireIn" property="expirein" jdbcType="INTEGER" />
+    <result column="sendTime" property="sendtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <select id="getAuthCode" resultMap="BaseResultMap" parameterType="com.hummingbird.commonbiz.entity.SmsCode" >
+    select *
+    from t_smscode
+    where appId = #{appid,jdbcType=VARCHAR} and mobileNum=#{mobilenum,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteAuthCode"  parameterType="com.hummingbird.commonbiz.entity.SmsCode" >
+    delete
+    from t_smscode
+    where appId = #{appid,jdbcType=VARCHAR} and mobileNum=#{mobilenum,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.hummingbird.commonbiz.entity.SmsCode" >
+    insert into t_smscode (mobileNum, appId, smsCode, 
+      expireIn, sendTime)
+    values (#{mobilenum,jdbcType=VARCHAR}, #{appid,jdbcType=VARCHAR}, #{smscode,jdbcType=VARCHAR}, 
+      #{expirein,jdbcType=INTEGER}, #{sendtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hummingbird.commonbiz.entity.SmsCode" >
+    insert into t_smscode
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mobilenum != null" >
+        mobileNum,
+      </if>
+      <if test="appid != null" >
+        appId,
+      </if>
+      <if test="smscode != null" >
+        smsCode,
+      </if>
+      <if test="expirein != null" >
+        expireIn,
+      </if>
+      <if test="sendtime != null" >
+        sendTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mobilenum != null" >
+        #{mobilenum,jdbcType=VARCHAR},
+      </if>
+      <if test="appid != null" >
+        #{appid,jdbcType=VARCHAR},
+      </if>
+      <if test="smscode != null" >
+        #{smscode,jdbcType=VARCHAR},
+      </if>
+      <if test="expirein != null" >
+        #{expirein,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null" >
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

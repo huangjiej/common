@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hummingbird.commonbiz.mapper.BlackBuyerMapper">
+	<resultMap id="BlackBuyer" type="com.hummingbird.commonbiz.entity.BlackBuyer">
+		<!-- column表字段 property类字段 -->
+		<result column="buyerId" property="buyerId" />
+		<result column="backDesc" property="backDesc" />
+		<result column="operator" property="operator" />
+	</resultMap>
+
+	<select id="getBlackBuyer" parameterType="java.lang.String"
+		resultMap="BlackBuyer">
+		select * from t_blacklist where buyerId=#{buyerId}
+	</select>
+	
+</mapper>

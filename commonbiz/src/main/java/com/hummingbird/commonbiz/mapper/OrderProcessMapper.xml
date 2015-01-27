@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hummingbird.commonbiz.mapper.OrderProcessMapper" >
+  <resultMap id="BaseResultMap" type="com.hummingbird.commonbiz.entity.OrderProcess" >
+    <id column="idt_order_process" property="idtOrderProcess" jdbcType="INTEGER" />
+    <result column="buyerId" property="buyerId" jdbcType="VARCHAR" />
+    <result column="orderId" property="orderId" jdbcType="VARCHAR" />
+    <result column="insertTime" property="insertTime" jdbcType="TIMESTAMP" />
+    <result column="billingType" property="billingType" jdbcType="CHAR" />
+    <result column="updown" property="updown" jdbcType="VARCHAR" />
+    <result column="smsPort" property="smsport" jdbcType="VARCHAR" />
+    <result column="smsContent" property="smscontent" jdbcType="VARCHAR" />
+    <result column="otherInfo" property="otherInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    idt_order_process, buyerId, orderId, insertTime, billingType, updown, smsPort, smsContent, 
+    otherInfo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order_process
+    where idt_order_process = #{idtOrderProcess,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_order_process
+    where idt_order_process = #{idtOrderProcess,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hummingbird.commonbiz.entity.OrderProcess" >
+    insert into t_order_process (idt_order_process, buyerId, orderId, 
+      insertTime, billingType, updown, 
+      smsPort, smsContent, otherInfo
+      )
+    values (#{idtOrderProcess,jdbcType=INTEGER}, #{buyerId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, 
+      #{insertTime,jdbcType=TIMESTAMP}, #{billingType,jdbcType=CHAR}, #{updown,jdbcType=VARCHAR}, 
+      #{smsport,jdbcType=VARCHAR}, #{smscontent,jdbcType=VARCHAR}, #{otherInfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hummingbird.commonbiz.entity.OrderProcess" >
+    insert into t_order_process
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idtOrderProcess != null" >
+        idt_order_process,
+      </if>
+      <if test="buyerId != null" >
+        buyerId,
+      </if>
+      <if test="orderId != null" >
+        orderId,
+      </if>
+      <if test="insertTime != null" >
+        insertTime,
+      </if>
+      <if test="billingType != null" >
+        billingType,
+      </if>
+      <if test="updown != null" >
+        updown,
+      </if>
+      <if test="smsport != null" >
+        smsPort,
+      </if>
+      <if test="smscontent != null" >
+        smsContent,
+      </if>
+      <if test="otherInfo != null" >
+        otherInfo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idtOrderProcess != null" >
+        #{idtOrderProcess,jdbcType=INTEGER},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null" >
+        #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billingType != null" >
+        #{billingType,jdbcType=CHAR},
+      </if>
+      <if test="updown != null" >
+        #{updown,jdbcType=VARCHAR},
+      </if>
+      <if test="smsport != null" >
+        #{smsport,jdbcType=VARCHAR},
+      </if>
+      <if test="smscontent != null" >
+        #{smscontent,jdbcType=VARCHAR},
+      </if>
+      <if test="otherInfo != null" >
+        #{otherInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hummingbird.commonbiz.entity.OrderProcess" >
+    update t_order_process
+    <set >
+      <if test="buyerId != null" >
+        buyerId = #{buyerId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        orderId = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="insertTime != null" >
+        insertTime = #{insertTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billingType != null" >
+        billingType = #{billingType,jdbcType=CHAR},
+      </if>
+      <if test="updown != null" >
+        updown = #{updown,jdbcType=VARCHAR},
+      </if>
+      <if test="smsport != null" >
+        smsPort = #{smsport,jdbcType=VARCHAR},
+      </if>
+      <if test="smscontent != null" >
+        smsContent = #{smscontent,jdbcType=VARCHAR},
+      </if>
+      <if test="otherInfo != null" >
+        otherInfo = #{otherInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where idt_order_process = #{idtOrderProcess,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hummingbird.commonbiz.entity.OrderProcess" >
+    update t_order_process
+    set buyerId = #{buyerId,jdbcType=VARCHAR},
+      orderId = #{orderId,jdbcType=VARCHAR},
+      insertTime = #{insertTime,jdbcType=TIMESTAMP},
+      billingType = #{billingType,jdbcType=CHAR},
+      updown = #{updown,jdbcType=VARCHAR},
+      smsPort = #{smsport,jdbcType=VARCHAR},
+      smsContent = #{smscontent,jdbcType=VARCHAR},
+      otherInfo = #{otherInfo,jdbcType=VARCHAR}
+    where idt_order_process = #{idtOrderProcess,jdbcType=INTEGER}
+  </update>
+</mapper>
