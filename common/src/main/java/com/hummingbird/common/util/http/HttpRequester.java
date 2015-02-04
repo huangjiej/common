@@ -6,11 +6,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethodBase;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -176,5 +179,34 @@ public class HttpRequester {
 			throw new RequestException("请求出错",e);
 		}
 	}
+    
+    /**
+     * 把map的内容转换成 xx=xx&xx=xx的形式
+     * @param map
+     * @return
+     */
+    public String convert2formdataParam(Map map){
+    	if (null == map || map.isEmpty()) {
+			return "";
+		}
+    	
+		StringBuilder url = new StringBuilder();
+		String spliter="";
+		for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext();) {
+			Map.Entry en = (Map.Entry) iterator.next();
+			String val = ObjectUtils.toString(en.getValue(),"");
+			Object key = en.getKey();
+			try {
+				val = URLEncoder.encode(val, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			url.append(spliter).append(key).append("=").append(val);
+			spliter="&";
+		}
+		
+		return url.toString();
+
+    }
 
 }  

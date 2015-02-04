@@ -59,6 +59,22 @@ public class ValidateException extends BusinessException {
 	 */
 	public static final DataInvalidException ERROR_EXISTING_ACCOUNT_EXISTS=new DataInvalidException(10110, "用户账户已存在");
 	/**
+	 * 产品不存在
+	 */
+	public static final DataInvalidException ERROR_EXISTING_PRODUCT_NOT_EXISTS=new DataInvalidException(10111, "产品不存在");
+	/**
+	 * 产品已存在
+	 */
+	public static final DataInvalidException ERROR_EXISTING_PRODUCT_EXISTS=new DataInvalidException(10112, "产品已存在");
+	/**
+	 * 商户已存在
+	 */
+	public static final DataInvalidException ERROR_EXISTING_SELLER_EXISTS=new DataInvalidException(10113, "商户已存在");
+	/**
+	 * 商户不存在
+	 */
+	public static final DataInvalidException ERROR_EXISTING_SELLER_NOT_EXISTS=new DataInvalidException(10114, "商户不存在");
+	/**
 	 * 手机号码不匹配
 	 */
 	public static final DataInvalidException ERROR_MATCH_MOBILE=new DataInvalidException(10201, "手机号码不匹配");
@@ -103,6 +119,22 @@ public class ValidateException extends BusinessException {
 	 */
 	public static final SignatureException   ERROR_SIGNATURE_ECC=new SignatureException(10304, "签名验证失败（ECC)");
 	/**
+	 * 签名生成失败（MD5)
+	 */
+	public static final SignatureException   ERROR_SIGNATURE_GENERATE_MD5=new SignatureException(10305, "签名生成失败（MD5)");
+	/**
+	 * 签名生成失败（SHA1)
+	 */
+	public static final SignatureException   ERROR_SIGNATURE_GENERATE_SHA1=new SignatureException(10306, "签名生成失败（SHA1)");
+	/**
+	 * 签名生成失败（RSA)
+	 */
+	public static final SignatureException   ERROR_SIGNATURE_GENERATE_RSA=new SignatureException(10307, "签名生成失败（RSA)");
+	/**
+	 * 签名生成失败（ECC)
+	 */
+	public static final SignatureException   ERROR_SIGNATURE_GENERATE_ECC=new SignatureException(10308, "签名生成失败（ECC)");
+	/**
 	 * 字符集错误，要求使用UTF-8
 	 */
 	public static final DataInvalidException ERROR_MESSAGE_CHARSET=new DataInvalidException(10401, "字符集错误，要求使用UTF-8");
@@ -134,7 +166,16 @@ public class ValidateException extends BusinessException {
 	public static final DataInvalidException 	 ERROR_APP_OFFLINE=new DataInvalidException(10702, "应用已下线");
 	
 	/**
-	 * 应用已下线
+	 * 产品已下线
+	 */
+	public static final DataInvalidException 	 ERROR_PRODUCT_OFFLINE=new DataInvalidException(10703, "产品已下线");
+	/**
+	 * 商户已下线
+	 */
+	public static final DataInvalidException 	 ERROR_SELLER_OFFLINE=new DataInvalidException(10704, "商户已下线");
+	
+	/**
+	 * 系统内部错误
 	 */
 	public static final ValidateException 	 ERROR_SYSTEM_INTERNAL=new ValidateException(10801, "系统内部错误");
 	
