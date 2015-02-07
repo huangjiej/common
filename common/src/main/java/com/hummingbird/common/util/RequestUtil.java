@@ -21,6 +21,7 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
+import org.codehaus.jackson.type.JavaType;
 import org.springframework.util.StringUtils;
 
 import com.hummingbird.common.exception.DataInvalidException;
@@ -141,6 +142,38 @@ public class RequestUtil {
 		}
 		return binding;
 	}
+	
+	/**
+	 * 转换字符串为对象
+	 * @param jsonstr
+	 * @param c
+	 * @return
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 * @throws ValidateException 
+	 */
+	public static <T> T convertJson2Obj(String jsonstr,Class<T> c,Class parametricType) throws JsonParseException, JsonMappingException, IOException, ValidateException{
+		log.debug(String.format("把字符串内容[%s]映射为对象[%s]",jsonstr,c.getName()));
+		if(StringUtils.isEmpty(jsonstr)){
+			log.error("post的数据为空");
+			throw new ValidateException(1203,"参数不正确,请求参数为空");
+		}
+		T binding;
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.configure(SerializationConfig.Feature.INDENT_OUTPUT,
+					Boolean.TRUE);
+			JavaType type = mapper.getTypeFactory().constructParametricType(c, parametricType);
+			binding = mapper.readValue(jsonstr, type);
+		} catch (Exception e) {
+			log.error("转换失败",e);
+			throw new ValidateException(1203,"参数不正确,请求参数转换失败");
+		}
+		return binding;
+	}
+	
+	
 
 	/**
 	 * 获取post的请求数据

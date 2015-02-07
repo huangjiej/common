@@ -103,6 +103,10 @@ public class ValidateException extends BusinessException {
 	 */
 	public static final DataInvalidException ERROR_MATCH_ACCOUNT=new DataInvalidException(10207, "用户账户不匹配");
 	/**
+	 * 支付码不匹配
+	 */
+	public static final DataInvalidException ERROR_MATCH_PAYMENT_CODE=new DataInvalidException(10208, "支付密码不匹配");
+	/**
 	 * 签名验证失败（MD5)
 	 */
 	public static final SignatureException   ERROR_SIGNATURE_MD5=new SignatureException(10301, "签名验证失败（MD5)");
