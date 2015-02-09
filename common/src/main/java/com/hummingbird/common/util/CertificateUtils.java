@@ -1493,7 +1493,7 @@ public class CertificateUtils
 	 * @return
 	 * @throws SignatureException 
 	 */
-	public String signWithDigitalCertByProperties(String ... strarr) throws SignatureException{
+	public static String signWithDigitalCertByProperties(String ... strarr) throws SignatureException{
 		if (log.isDebugEnabled()) {
 			log.debug(String.format("用数字证书上进行签名"));
 		}
