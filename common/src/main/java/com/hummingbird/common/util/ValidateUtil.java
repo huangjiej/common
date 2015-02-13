@@ -91,11 +91,19 @@ public abstract class ValidateUtil {
 	 * @return
 	 */
 	public static String sortbyValues(String ... values) {
-		Arrays.sort(values);
-		StringBuilder sb1 = new StringBuilder();
+		List<String> sortlist = new ArrayList<String>();
 		for (int i = 0; i < values.length; i++) {
 			String str = values[i];
+			if(org.apache.commons.lang.StringUtils.isNotBlank(str)){
+				sortlist.add(str);
+			}
+		}
+		Collections.sort(sortlist);
+		StringBuilder sb1 = new StringBuilder();
+		for (Iterator iterator = sortlist.iterator(); iterator.hasNext();) {
+			String str = (String) iterator.next();
 			sb1.append(str);
+			
 		}
 		String output = sb1.toString();
 		return output;
@@ -106,6 +114,13 @@ public abstract class ValidateUtil {
 	 * @return
 	 */
 	public static String sortbyValues(List<String> list){
+		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+			String str = (String) iterator.next();
+			if(org.apache.commons.lang.StringUtils.isBlank(str)){
+				iterator.remove();
+			}
+		}
+		
 		Collections.sort(list);
 		StringBuilder sb1 = new StringBuilder();
 		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
@@ -119,11 +134,12 @@ public abstract class ValidateUtil {
 	
 	public static void main(String[] args) {
 		List<String > sha1sortlist = new ArrayList<String>();
-		String[] values = new String[]{"1","a","2ab"};
+		String[] values = new String[]{"1","a",null,"2ab"};
 		String verifyData = sortbyValues(values);
 		System.out.println(verifyData);
 		sha1sortlist.add("a");
 		sha1sortlist.add("2ab");
+		sha1sortlist.add(null);
 		sha1sortlist.add("1");
 		System.out.println(sortbyValues(sha1sortlist));
 		System.out.println(org.apache.commons.lang.ObjectUtils.equals(null, null));
