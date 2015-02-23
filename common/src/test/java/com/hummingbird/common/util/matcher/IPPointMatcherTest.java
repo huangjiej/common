@@ -89,7 +89,7 @@ public class IPPointMatcherTest {
 				assertFalse(matchIpaddress);
 				
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			matchIpaddress = matcher.match(null);
 			assertFalse(matchIpaddress);
