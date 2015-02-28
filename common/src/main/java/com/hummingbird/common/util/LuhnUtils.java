@@ -36,6 +36,7 @@ public class LuhnUtils {
 	    public static int  getCheckNum(String number){
 	    	//定义s1为奇数位总和，s2为偶数位总和
 	        int s1 = 0, s2 = 0;
+	        int checkNum = 0;
 	        // 从最末一位开始提取，每一位上的数值
 	        String reverse = new StringBuffer(number).reverse().toString();
 	        for(int i = 0 ;i < reverse.length();i++){
@@ -55,7 +56,14 @@ public class LuhnUtils {
 	        String str = String.valueOf(s1 + s2); 
 	        int lastNum = Integer.parseInt(String.valueOf(str.charAt(str.length()-1)));
 	        //检验位得出
-	        int checkNum = 10-lastNum;
+	        if(lastNum==0){
+	        	 checkNum = 0;
+	        }
+	        else{
+	        	 checkNum = 10-lastNum;
+	        }
+	        
+	        
 	        return checkNum;
 	    }
 }
