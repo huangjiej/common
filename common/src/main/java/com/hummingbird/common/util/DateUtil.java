@@ -20,6 +20,7 @@ public class DateUtil {
 		private static SimpleDateFormat	fdate		= new SimpleDateFormat("yyyy-MM-dd");
 		private static SimpleDateFormat	ftime		= new SimpleDateFormat("HH:mm:ss");
 		private static SimpleDateFormat	fdatetime	= new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+		private static SimpleDateFormat	fdatetimenospliter	= new SimpleDateFormat("yyyyMMddHHmmss");
 		
 		private static String datespliter = "-";//日期分隔符
 	    private static String timespliter = ":";//时间分隔符
@@ -248,6 +249,14 @@ public class DateUtil {
     		}
     		else
     		{
+    			//检查是否紧凑格式
+    			try {
+					Date parse = fdatetimenospliter.parse(dateStr);
+					c.setTime(parse);
+					return c;
+				} catch (Exception e) {
+				}
+    			
     			throw new ParseException("转换错误，未知的日期格式"+dateStr,0);
     		}
     		
