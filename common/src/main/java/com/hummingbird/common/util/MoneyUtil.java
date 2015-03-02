@@ -12,6 +12,11 @@ public class MoneyUtil {
 //		return sb.toString().trim();
 //	}
 	
+	/**
+	 * 把分转化为元并且精度为小数后1位，即角
+	 * @param price
+	 * @return
+	 */
 	public static String getMoneyStringDecimal2(Number price){
 //		DecimalFormat df = new DecimalFormat("0.0");
 //		String money=df.format(price);
