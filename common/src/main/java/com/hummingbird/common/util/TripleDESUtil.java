@@ -17,6 +17,7 @@ import sun.misc.BASE64Encoder;
 public class TripleDESUtil {
 	
 	private static final String Algorithm = "DESede"; // 定义加密算法
+	public static final String CIPHER_ALGORITHM = "DESede/ECB/PKCS5Padding";
 	
 	/**
 	 * 根据参数生成KEY
@@ -27,7 +28,7 @@ public class TripleDESUtil {
 	public static Key getKey(String strKey) {
 		Key key = null;
 		try {
-			KeyGenerator _generator = KeyGenerator.getInstance("DESede");
+			KeyGenerator _generator = KeyGenerator.getInstance(Algorithm);
 			_generator.init(new SecureRandom(strKey.getBytes()));
 			key = _generator.generateKey();
 			_generator = null;
@@ -102,7 +103,7 @@ public class TripleDESUtil {
 		byte[] byteFina = null;
 		Cipher cipher;
 		try {
-			cipher = Cipher.getInstance(Algorithm);
+			cipher = Cipher.getInstance(CIPHER_ALGORITHM);
 			cipher.init(Cipher.ENCRYPT_MODE, key);
 			byteFina = cipher.doFinal(byteS);
 		} catch (Exception e) {
@@ -126,7 +127,7 @@ public class TripleDESUtil {
 		Cipher cipher;
 		byte[] byteFina = null;
 		try {
-			cipher = Cipher.getInstance(Algorithm);
+			cipher = Cipher.getInstance(CIPHER_ALGORITHM);
 			cipher.init(Cipher.DECRYPT_MODE, key);
 			byteFina = cipher.doFinal(byteD);
 		} catch (Exception e) {
