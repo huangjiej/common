@@ -53,6 +53,7 @@ public class TripleDESUtil {
 			byteMing = data.getBytes("UTF8");
 			byteMi = getEncCode(byteMing, getKey(strKey));
 			strMi = base64en.encode(byteMi).replaceAll("\n", "").replaceAll("\r", "");
+			System.out.println(String.format("对明文%s采用密钥%s进行加密，密码为%s", data,strKey,strMi));
 		} catch (Exception e) {
 			throw new RuntimeException("3DES加密错误，错误信息：", e);
 		} finally {
