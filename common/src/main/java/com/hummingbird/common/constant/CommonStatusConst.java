@@ -33,6 +33,10 @@ public abstract class CommonStatusConst {
 	 * 下线
 	 */
 	public  static final String STATUS_OFF="OFF";
+	/**
+	 * 创建
+	 */
+	public  static final String STATUS_CREATE="CRT";
 	
 	
 }
