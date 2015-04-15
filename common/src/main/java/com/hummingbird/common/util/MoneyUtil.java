@@ -26,4 +26,14 @@ public class MoneyUtil {
 		
 		return new DecimalFormat("0.0").format((double)(price.doubleValue()/100));
 	}
+	
+	/**
+	 * 格式化金额，到分
+	 * @param price
+	 * @return
+	 */
+	public static String getMoneyStringDecimal2fen(Number price){
+		return new DecimalFormat("0.00").format((double)(price.doubleValue()/100));
+		
+	}
 }
