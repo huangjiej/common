@@ -8,7 +8,7 @@ package com.hummingbird.common.face.statuscheck;
 /**
  * @author huangjiej_2
  * 2014年12月20日 上午1:05:56
- * 本类主要做为
+ * 本类主要做为 状态检查器
  */
 public interface StatusChecker {
 

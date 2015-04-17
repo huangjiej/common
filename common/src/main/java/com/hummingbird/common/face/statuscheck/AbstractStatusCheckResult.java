@@ -9,17 +9,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import com.hummingbird.common.util.StrUtil;
-import com.hummingbird.common.vo.StatusCheckResult;
-
 /**
  * @author john huang
  * 2015年3月5日 下午6:54:25
  * 本类主要做为状态报告类，这个类
  */
-public abstract class AbstractStatusCheckResult implements IStatusCheckResult,StatusCheckItemResult {
+public class AbstractStatusCheckResult implements StatusCheckResult {
 
-	 
 	/**
 	 * 状态级别，分为3分，2-异常，需要马上报警，1-报告，可能有问题，或存在一些需要报告的内容，这也需要报告，由运维判断是否处理，0-正常，不需要报告
 	 */
@@ -31,9 +27,30 @@ public abstract class AbstractStatusCheckResult implements IStatusCheckResult,St
 	 */
 	protected String functionName="未命名";
 	
-	protected List<StatusCheckItemResult> items = new ArrayList<StatusCheckItemResult>();
+	protected List<StatusCheckResult> items = new ArrayList<StatusCheckResult>();
+	
+	public AbstractStatusCheckResult(){
+		
+	}
+	public AbstractStatusCheckResult(String functionName){
+		this.functionName = functionName;
+	}
 	
 	
+	
+	public AbstractStatusCheckResult(int statusLevel, String report) {
+		super();
+		this.statusLevel = statusLevel;
+		this.report = report;
+	}
+	
+	public AbstractStatusCheckResult(String functionName, int statusLevel,
+			String report) {
+		super();
+		this.functionName = functionName;
+		this.statusLevel = statusLevel;
+		this.report = report;
+	}
 	/* (non-Javadoc)
 	 * @see com.hummingbird.common.face.statuscheck.IStatusCheckResult#getStatusLevel()
 	 */
@@ -44,7 +61,7 @@ public abstract class AbstractStatusCheckResult implements IStatusCheckResult,St
 			return max;
 		}
 		for (Iterator iterator = items.iterator(); iterator.hasNext();) {
-			StatusCheckItemResult statusCheckItemResult = (StatusCheckItemResult) iterator
+			StatusCheckResult statusCheckItemResult = (StatusCheckResult) iterator
 					.next();
 			if(statusCheckItemResult.getStatusLevel()>max){
 				max = statusCheckItemResult.getStatusLevel();
@@ -60,52 +77,65 @@ public abstract class AbstractStatusCheckResult implements IStatusCheckResult,St
 		return report;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.hummingbird.common.face.statuscheck.IStatusCheckResult#getResultReport()
-	 */
-	@Override
-	public String getResultReport() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("\"");
-		sb.append(functionName );
-		sb.append("\"状态报告:" );
-		int sl = getStatusLevel();
-		switch (sl) {
-		case 2:
-			sb.append("运行异常" );
-			break;
-		case 1:
-			sb.append("运行警报" );
-			break;
-		case 0:
-			sb.append("运行正常" );
-			break;
-
-		default:
-			break;
-		}
-		if(StrUtil.isNotBlank(report)){
-			sb.append("-" );
-			sb.append(report );
-		}
-		sb.append("\n" );
-		for (Iterator iterator = items.iterator(); iterator.hasNext();) {
-			StatusCheckItemResult statusCheckItemResult = (StatusCheckItemResult) iterator
-					.next();
-			String report2 = statusCheckItemResult.getReport();
-			sb.append(report2);
-			sb.append("\n" );
-		}
-		return sb.toString();
-	}
+	
 
 	
-	public void addItem(StatusCheckItemResult item){
+	public void addItem(StatusCheckResult item){
 		this.items.add(item);
 	}
 	
-	public List<StatusCheckItemResult> getItemResults(){
+
+	/**
+	 * @return the functionName
+	 */
+	public String getFunctionName() {
+		return functionName;
+	}
+
+	/**
+	 * @param functionName the functionName to set
+	 */
+	public void setFunctionName(String functionName) {
+		this.functionName = functionName;
+	}
+
+	/**
+	 * @param statusLevel the statusLevel to set
+	 */
+	public void setStatusLevel(int statusLevel) {
+		this.statusLevel = statusLevel;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.hummingbird.common.face.statuscheck.StatusCheckResult#getResultReport()
+	 */
+	@Override
+	public String getResultReport() {
+		return getReport();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.hummingbird.common.face.statuscheck.StatusCheckResult#getSubStatusCheckResult()
+	 */
+	@Override
+	public List<StatusCheckResult> getSubStatusCheckResult() {
 		return items;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.hummingbird.common.face.statuscheck.StatusCheckResult#getFuncname()
+	 */
+	@Override
+	public String getFuncname() {
+		return getFunctionName();
+	}
+
+	/**
+	 * @param report the report to set
+	 */
+	public void setReport(String report) {
+		this.report = report;
+	}
+
 
 }
