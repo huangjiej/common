@@ -75,6 +75,10 @@ public class ValidateException extends BusinessException {
 	 */
 	public static final DataInvalidException ERROR_EXISTING_SELLER_NOT_EXISTS=new DataInvalidException(10114, "商户不存在");
 	/**
+	 * 订单不存在
+	 */
+	public static final DataInvalidException ERROR_EXISTING_ORDER_NOT_EXISTS=new DataInvalidException(10115, "订单不存在");
+	/**
 	 * 手机号码不匹配
 	 */
 	public static final DataInvalidException ERROR_MATCH_MOBILE=new DataInvalidException(10201, "手机号码不匹配");
