@@ -33,4 +33,10 @@ public interface StatusCheckResult {
 	 */
 	public String getFuncname();
 	
+	/**
+	 * 是否正常，即状态值=0
+	 * @return
+	 */
+	public boolean isNormal();
+	
 }

@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hummingbird.common.exception.ValidateException;
+import com.hummingbird.common.face.statuscheck.AbstractStatusCheckResult;
 import com.hummingbird.common.util.RequestUtil;
 import com.hummingbird.common.vo.ResultModel;
-import com.hummingbird.common.vo.StatusCheckResult;
 
 @Controller
 public class BaseController {
@@ -67,7 +67,7 @@ public class BaseController {
 			log.debug(String.format("状态报告开始"));
 		}
     	
-    	return new StatusCheckResult();
+    	return new AbstractStatusCheckResult();
     }
     
 	/**
@@ -99,7 +99,7 @@ public class BaseController {
 			rm.mergeException(ValidateException.ERROR_PARAM_FORMAT_ERROR.cloneAndAppend(null, "订单参数"));
 			return rm;
 		}
-    	return new StatusCheckResult();
+    	return new AbstractStatusCheckResult();
     }
 	
 	

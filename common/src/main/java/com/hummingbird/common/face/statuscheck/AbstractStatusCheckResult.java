@@ -136,6 +136,13 @@ public class AbstractStatusCheckResult implements StatusCheckResult {
 	public void setReport(String report) {
 		this.report = report;
 	}
+	/* (non-Javadoc)
+	 * @see com.hummingbird.common.face.statuscheck.StatusCheckResult#isNormal()
+	 */
+	@Override
+	public boolean isNormal() {
+		return 0==statusLevel;
+	}
 
 
 }
