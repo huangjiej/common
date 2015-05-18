@@ -14,10 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hummingbird.common.exception.ValidateException;
 import com.hummingbird.common.face.statuscheck.AbstractStatusCheckResult;
+import com.hummingbird.common.face.statuscheck.StatusCheckResult;
 import com.hummingbird.common.util.RequestUtil;
 import com.hummingbird.common.vo.ResultModel;
 
@@ -102,7 +104,30 @@ public class BaseController {
     	return new AbstractStatusCheckResult();
     }
 	
-	
+	/**
+	 * 心跳接收
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/heartbreakreceive",method=RequestMethod.POST)
+    public @ResponseBody Object heartbreakreceive(HttpServletRequest request){
+    	if (log.isDebugEnabled()) {
+			log.debug(String.format("心跳接收开始"));
+		}
+    	ResultModel rm = new ResultModel();
+    	rm.setErr(0, "心跳接收成功");
+    	StatusCheckResult scresult;
+		try {
+			String jsonstr = RequestUtil.getRequestPostData(request);
+			scresult = RequestUtil.convertJson2Obj(jsonstr, StatusCheckResult.class);
+			
+		} catch (Exception e) {
+			log.error(String.format("获取心跳参数出错"),e);
+			rm.mergeException(ValidateException.ERROR_PARAM_FORMAT_ERROR.cloneAndAppend(null, "订单参数"));
+			return rm;
+		}
+    	return rm;
+    }
 	
 	
 }

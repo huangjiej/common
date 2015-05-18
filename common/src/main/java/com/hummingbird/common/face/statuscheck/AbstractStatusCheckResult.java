@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /**
  * @author john huang
  * 2015年3月5日 下午6:54:25
@@ -28,6 +30,11 @@ public class AbstractStatusCheckResult implements StatusCheckResult {
 	protected String functionName="未命名";
 	
 	protected List<StatusCheckResult> items = new ArrayList<StatusCheckResult>();
+
+	/**
+	 * 功能代码
+	 */
+	private String funcCode;
 	
 	public AbstractStatusCheckResult(){
 		
@@ -110,6 +117,7 @@ public class AbstractStatusCheckResult implements StatusCheckResult {
 	 * @see com.hummingbird.common.face.statuscheck.StatusCheckResult#getResultReport()
 	 */
 	@Override
+	@JsonIgnore
 	public String getResultReport() {
 		return getReport();
 	}
@@ -121,11 +129,23 @@ public class AbstractStatusCheckResult implements StatusCheckResult {
 	public List<StatusCheckResult> getSubStatusCheckResult() {
 		return items;
 	}
+	
+	public void  setSubStatusCheckResult(ArrayList<AbstractStatusCheckResult> itemlist){
+		if(items==null){
+			items = new ArrayList<StatusCheckResult>();
+		}
+		else{
+			items.clear();
+		}
+		items.addAll(itemlist);
+	}
+	
 
 	/* (non-Javadoc)
 	 * @see com.hummingbird.common.face.statuscheck.StatusCheckResult#getFuncname()
 	 */
 	@Override
+	@JsonIgnore
 	public String getFuncname() {
 		return getFunctionName();
 	}
@@ -140,8 +160,31 @@ public class AbstractStatusCheckResult implements StatusCheckResult {
 	 * @see com.hummingbird.common.face.statuscheck.StatusCheckResult#isNormal()
 	 */
 	@Override
+	@JsonIgnore
 	public boolean isNormal() {
 		return 0==statusLevel;
+	}
+	/* (non-Javadoc)
+	 * @see com.hummingbird.common.face.statuscheck.StatusCheckResult#getFuncCode()
+	 */
+	@Override
+	public String getFuncCode() {
+		return funcCode;
+	}
+	/**
+	 * @param funcCode the funcCode to set
+	 */
+	public void setFuncCode(String funcCode) {
+		this.funcCode = funcCode;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "AbstractStatusCheckResult [statusLevel=" + statusLevel
+				+ ", report=" + report + ", functionName=" + functionName
+				+ ", items=" + items + ", funcCode=" + funcCode + "]";
 	}
 
 

@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.hummingbird.common.ext.AppIniter;
+import com.hummingbird.common.face.HeartBreakIniter;
 import com.hummingbird.common.util.PropertiesUtil;
 import com.hummingbird.common.util.StrUtil;
 
@@ -48,6 +49,10 @@ public class StartLoadListener implements ServletContextListener {
 				
 			}
 		}
+		//心跳初始化
+		new HeartBreakIniter().initHeartBreak();
+		
+		
 		
 	}
 

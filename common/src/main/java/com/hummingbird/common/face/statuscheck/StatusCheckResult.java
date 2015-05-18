@@ -34,6 +34,12 @@ public interface StatusCheckResult {
 	public String getFuncname();
 	
 	/**
+	 * 功能代号
+	 * @return
+	 */
+	public String getFuncCode();
+	
+	/**
 	 * 是否正常，即状态值=0
 	 * @return
 	 */

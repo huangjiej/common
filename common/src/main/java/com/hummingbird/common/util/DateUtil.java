@@ -385,5 +385,11 @@ public class DateUtil {
 		Date date = new Date();
 		System.out.println(toDayEnd(date));
 		System.out.println(toDayStart(date));
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date(115,5,6,13,45,7));
+		c.add(Calendar.DATE , 1);
+		c.add(Calendar.SECOND, -1);
+		System.out.println(c.getTime());
 	}
 }

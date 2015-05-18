@@ -18,6 +18,7 @@ public class TripleDESUtil {
 	
 	// 定义加密算法，有DES、DESede(即3DES)、Blowfish
 		private static final String Algorithm = "DESede";
+		private static final String Algorithm_ecb5padding = "DESede/ECB/PKCS5Padding";
 
 		/**
 		 * 加密String明文输入,String密文base64输出
@@ -81,7 +82,7 @@ public class TripleDESUtil {
 		public static byte[] getEncCode(byte[] src, byte[] key) {
 			try {
 				SecretKey deskey = new SecretKeySpec(key, Algorithm); // 生成密钥
-				Cipher c1 = Cipher.getInstance(Algorithm); // 实例化负责加密/解密的Cipher工具类
+				Cipher c1 = Cipher.getInstance(Algorithm_ecb5padding); // 实例化负责加密/解密的Cipher工具类
 				c1.init(Cipher.ENCRYPT_MODE, deskey); // 初始化为加密模式
 				return c1.doFinal(src);
 			} catch (java.security.NoSuchAlgorithmException e1) {
@@ -141,7 +142,7 @@ public class TripleDESUtil {
 		}
 		
 		public static void main(String[] args) {
-			String strKey = "123qwe!@#4rf%TGhy67il9ij12481632";
+			String strKey = "123qwe!@#4rf%TGhy67il9ij";
 
 			String str = "Happy New Year!新年快乐!";
 			System.out.println("明文：" + str);
@@ -151,5 +152,12 @@ public class TripleDESUtil {
 			
 			String strDes = decryptBased3Des(strEnc, strKey);// 把String 类型的密文解密
 			System.out.println("解密： " + strDes);
+			str="18922260815";
+			strEnc = encryptBased3Des(str, strKey);// 加密字符串,返回String的密文
+			System.out.println("密文： " + strEnc);//RVNNYm5Qbm5SM1c4VDI2ZUNXcnJuQT09
+			strKey = "123qwe!@#4rf%TGh";
+			strEnc = encryptBased3Des(str, strKey);// 加密字符串,返回String的密文
+			System.out.println("密文： " + strEnc);//RVNNYm5Qbm5SM1c4VDI2ZUNXcnJuQT09
+			
 	    }
 }
