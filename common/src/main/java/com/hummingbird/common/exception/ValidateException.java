@@ -181,6 +181,10 @@ public class ValidateException extends BusinessException {
 	 * 商户已下线
 	 */
 	public static final DataInvalidException 	 ERROR_SELLER_OFFLINE=new DataInvalidException(10704, "商户已下线");
+	/**
+	 * 用户未认证
+	 */
+	public static final DataInvalidException 	 ERROR_USER_AUTH=new DataInvalidException(10705, "用户未认证");
 	
 	/**
 	 * 系统内部错误
@@ -246,6 +250,11 @@ public class ValidateException extends BusinessException {
 		ERROR_EXISTING_ORDERNO_EXISTS.baseException=true;
 		ERROR_EXISTING_ACCOUNT_NOT_EXISTS.baseException=true;
 		ERROR_EXISTING_ACCOUNT_EXISTS.baseException=true;
+		ERROR_EXISTING_PRODUCT_NOT_EXISTS.baseException=true;
+		ERROR_EXISTING_PRODUCT_EXISTS.baseException=true;
+		ERROR_EXISTING_SELLER_EXISTS.baseException=true;
+		ERROR_EXISTING_SELLER_NOT_EXISTS.baseException=true;
+		ERROR_EXISTING_ORDER_NOT_EXISTS.baseException=true;
 		ERROR_MATCH_MOBILE.baseException=true;
 		ERROR_MATCH_USER.baseException=true;
 		ERROR_MATCH_SMSCODE.baseException=true;
@@ -253,6 +262,7 @@ public class ValidateException extends BusinessException {
 		ERROR_MATCH_VALIDATECODE.baseException=true;
 		ERROR_MATCH_ORDERNO.baseException=true;
 		ERROR_MATCH_ACCOUNT.baseException=true;
+		ERROR_MATCH_PAYMENT_CODE.baseException=true;
 		ERROR_SIGNATURE_MD5.baseException=true;
 		ERROR_SIGNATURE_SHA1.baseException=true;
 		ERROR_SIGNATURE_RSA.baseException=true;
@@ -264,6 +274,7 @@ public class ValidateException extends BusinessException {
 		ERROR_PREMISSION_DENIED.baseException=true;
 		ERROR_APP_STATUS_PAUSE.baseException=true;
 		ERROR_APP_OFFLINE.baseException=true;
+		ERROR_USER_AUTH.baseException=true;
 		ERROR_SYSTEM_INTERNAL.baseException=true;
 		ERROR_PARAM_FORMAT_ERROR.baseException=true;
 		ERROR_PARAM_NOTEXIST.baseException=true;

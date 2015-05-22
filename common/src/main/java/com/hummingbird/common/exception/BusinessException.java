@@ -13,7 +13,15 @@ public class BusinessException extends Exception {
 	/**
 	 * 业务权限鉴权异常，一般是没有权限
 	 */
-	public static final int ERRCODE_AUTHORITY=8;
+	public static final int ERRCODE_AUTHORITY=99;
+	/**
+	 * 请求异常
+	 */
+	public static final int ERRCODE_REQUEST=98;
+	/**
+	 * 转换异常
+	 */
+	public static final int ERRCODE_CONVERSION=97;
 	/**
 	 * 错误号，0为正常，大于0为出错
 	 */
@@ -36,6 +44,7 @@ public class BusinessException extends Exception {
 	public BusinessException(String message, Throwable cause) {
 		super(message, cause);
 		errcode=1;
+		errmsg=message;
 	}
 	/**
 	 * 错误号，0为正常，大于0为出错

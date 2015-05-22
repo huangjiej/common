@@ -9,16 +9,18 @@ public class RequestException extends BusinessException{
 
 	public RequestException() {
 		super();
-		// TODO Auto-generated constructor stub
+		errcode=BusinessException.ERRCODE_REQUEST;
 	}
 
 	public RequestException(int errcode, String message) {
 		super(errcode, message);
+		errcode=BusinessException.ERRCODE_REQUEST;
 		// TODO Auto-generated constructor stub
 	}
 
 	public RequestException(String message, Throwable cause) {
 		super(message, cause);
+		errcode=BusinessException.ERRCODE_REQUEST;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -29,6 +31,7 @@ public class RequestException extends BusinessException{
 
 	public RequestException(Throwable cause) {
 		super(cause);
+		errcode=BusinessException.ERRCODE_REQUEST;
 		// TODO Auto-generated constructor stub
 	}
 
