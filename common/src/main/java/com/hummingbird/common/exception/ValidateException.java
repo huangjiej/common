@@ -185,6 +185,10 @@ public class ValidateException extends BusinessException {
 	 * 用户未认证
 	 */
 	public static final DataInvalidException 	 ERROR_USER_AUTH=new DataInvalidException(10705, "用户未认证");
+	/**
+	 * 用户未认证
+	 */
+	public static final DataInvalidException 	 ERROR_USER_ALREADY_AUTHED=new DataInvalidException(10706, "用户已认证");
 	
 	/**
 	 * 系统内部错误
@@ -275,6 +279,7 @@ public class ValidateException extends BusinessException {
 		ERROR_APP_STATUS_PAUSE.baseException=true;
 		ERROR_APP_OFFLINE.baseException=true;
 		ERROR_USER_AUTH.baseException=true;
+		ERROR_USER_ALREADY_AUTHED.baseException=true;
 		ERROR_SYSTEM_INTERNAL.baseException=true;
 		ERROR_PARAM_FORMAT_ERROR.baseException=true;
 		ERROR_PARAM_NOTEXIST.baseException=true;
