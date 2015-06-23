@@ -47,7 +47,7 @@ public class HttpRequester {
     }
     
     
-    private String send(String url,String method,Map<String, String> params){
+    public String send(String url,String method,Map<String, String> params){
     	StringBuffer temp;
 		HttpMethodBase httpMethod = null;
 		try {

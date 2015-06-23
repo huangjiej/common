@@ -1,5 +1,7 @@
 package com.hummingbird.common.controller;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hummingbird.common.event.BusinessEventListener;
+import com.hummingbird.common.event.EventListenerContainer;
+import com.hummingbird.common.event.StatusCheckerBusinessEventListener;
 import com.hummingbird.common.exception.ValidateException;
 import com.hummingbird.common.face.statuscheck.AbstractStatusCheckResult;
 import com.hummingbird.common.face.statuscheck.StatusCheckResult;
@@ -68,8 +73,32 @@ public class BaseController {
     	if (log.isDebugEnabled()) {
 			log.debug(String.format("状态报告开始"));
 		}
-    	
-    	return new AbstractStatusCheckResult();
+    	AbstractStatusCheckResult sr = new AbstractStatusCheckResult("状态报告结果");
+		List<BusinessEventListener> listeners = EventListenerContainer.getInstance().getListeners();
+		for (Iterator iterator = listeners.iterator(); iterator.hasNext();) {
+			BusinessEventListener businessEventListener = (BusinessEventListener) iterator
+					.next();
+			if (businessEventListener instanceof StatusCheckerBusinessEventListener) {
+				StatusCheckerBusinessEventListener sclistener = (StatusCheckerBusinessEventListener) businessEventListener;
+				StatusCheckResult statusCheck = sclistener.statusCheck();
+				List<StatusCheckResult> subStatusCheckResult = statusCheck.getSubStatusCheckResult();
+				if(subStatusCheckResult!=null)
+				{
+					for (Iterator iterator2 = subStatusCheckResult.iterator(); iterator2
+							.hasNext();) {
+						StatusCheckResult statusCheckResult = (StatusCheckResult) iterator2
+								.next();
+						sr.addItem(statusCheckResult);
+						
+					}
+				}
+				else{
+					sr.addItem(statusCheck);
+				}
+				
+			}
+		}
+		return sr;
     }
     
 	/**

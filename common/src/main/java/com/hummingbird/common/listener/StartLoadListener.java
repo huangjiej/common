@@ -50,9 +50,10 @@ public class StartLoadListener implements ServletContextListener {
 			}
 		}
 		//心跳初始化
+		if (log.isDebugEnabled()) {
+			log.debug(String.format("心跳初始化"));
+		}
 		new HeartBreakIniter().initHeartBreak();
-		
-		
 		
 	}
 
