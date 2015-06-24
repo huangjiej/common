@@ -61,7 +61,11 @@ public class HttpRequester {
 					}
 				}
 				if(StringUtils.isNotBlank(sb.toString())){
+					httpMethod = new GetMethod(url+"?"+sb.toString());
+				}
+				else{
 					httpMethod = new GetMethod(url);
+					
 				}
 			}else{
 				UTF8PostMethod postMethod = new UTF8PostMethod(url);
