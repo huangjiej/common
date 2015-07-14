@@ -4,12 +4,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.logging.Log;
@@ -399,6 +403,21 @@ public class RequestUtil {
 	        ip = request.getRemoteAddr();
 	    }
 	    return ip.equals("0:0:0:0:0:0:0:1")?"127.0.0.1":ip;
+	}
+
+
+
+	/**
+	 * 输出内容
+	 * @param response
+	 * @param format
+	 * @throws IOException 
+	 */
+	public static void writeOutput(HttpServletResponse response, String content) throws IOException {
+		try(PrintWriter w = response.getWriter()){
+			w.write(content);
+		}
+		
 	}
 
 }
