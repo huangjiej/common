@@ -414,6 +414,8 @@ public class RequestUtil {
 	 * @throws IOException 
 	 */
 	public static void writeOutput(HttpServletResponse response, String content) throws IOException {
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf8");
 		try(PrintWriter w = response.getWriter()){
 			w.write(content);
 		}
