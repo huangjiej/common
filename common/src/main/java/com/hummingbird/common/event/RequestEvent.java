@@ -17,10 +17,21 @@ public class RequestEvent implements BusinessEvent  {
 	 */
 	protected Object source;
 	/**
+	 * 请求类型
+	 */
+	protected String requestType;
+	/**
 	 * 是否成功
 	 */
 	protected boolean successed;
 	
+	public RequestEvent(Object source, String requestType, boolean successed) {
+		super();
+		this.source = source;
+		this.requestType = requestType;
+		this.successed = successed;
+	}
+
 	/**
 	 * @return
 	 */
@@ -58,6 +69,29 @@ public class RequestEvent implements BusinessEvent  {
 	 */
 	public void setSuccessed(boolean successed) {
 		this.successed = successed;
+	}
+
+	/**
+	 * @return the requestType
+	 */
+	public String getRequestType() {
+		return requestType;
+	}
+
+	/**
+	 * @param requestType the requestType to set
+	 */
+	public void setRequestType(String requestType) {
+		this.requestType = requestType;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "RequestEvent [source=" + source + ", requestType="
+				+ requestType + ", successed=" + successed + "]";
 	}
 	
 	

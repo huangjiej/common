@@ -27,7 +27,9 @@ import com.hummingbird.common.util.RequestUtil;
  */
 public class RequestAccessInterceptor extends HandlerInterceptorAdapter {
 
-
+	org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory
+			.getLog(this.getClass());
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
@@ -78,7 +80,9 @@ public class RequestAccessInterceptor extends HandlerInterceptorAdapter {
 //		String url = ((HttpServletRequest) request).getRequestURL().toString();
 //		((HttpServletResponse) response)
 //				.sendError(HttpServletResponse.SC_FORBIDDEN);
-		
+		if(log.isInfoEnabled()){
+			log.info(String.format("客户机地址%s不允许访问本服务", clientAddr));
+		}
 		RequestUtil.writeOutput((HttpServletResponse)response,String.format("{\"errcode\":\"%s\",\"errmsg\":\"%s\"}",ValidateException.ERROR_PREMISSION_DENIED.getErrcode(),"IP地址访问限制"));
 	}
 

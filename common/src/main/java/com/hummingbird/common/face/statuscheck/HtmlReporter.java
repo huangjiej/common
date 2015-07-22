@@ -13,9 +13,9 @@ import org.apache.commons.lang.StringUtils;
 /**
  * @author john huang
  * 2015年4月17日 上午8:47:20
- * 本类主要做为短信报告器
+ * 本类主要做为html报告器
  */
-public class SmsReporter implements StatusCheckReporter{
+public class HtmlReporter implements StatusCheckReporter{
 
 	/* (non-Javadoc)
 	 * @see com.hummingbird.common.face.statuscheck.StatusCheckReporter#report(com.hummingbird.common.face.statuscheck.StatusCheckResult)
@@ -23,28 +23,32 @@ public class SmsReporter implements StatusCheckReporter{
 	@Override
 	public String report(StatusCheckResult result) {
 		StringBuilder sb = new StringBuilder();
+		sb.append("<div>");
 		sb.append("\"");
 		sb.append(result.getFuncname() );
 		sb.append("\"状态报告:" );
+		sb.append("<b style=\"color:red\">");
 		int sl = result.getStatusLevel();
 		switch (sl) {
 		case 2:
-			sb.append("异常" );
+			sb.append("运行异常" );
 			break;
 		case 1:
-			sb.append("警报" );
+			sb.append("运行警报" );
 			break;
 		case 0:
-			sb.append("正常" );
+			sb.append("运行正常" );
 			break;
 
 		default:
 			break;
 		}
+		sb.append("</b>");
+		sb.append("</div>");
 		String reportStr = getReportStr(result,true);
-		
+		sb.append("<div>" );
 		sb.append(reportStr);
-		
+		sb.append("</div>" );
 		return sb.toString();
 	}
 
@@ -53,46 +57,51 @@ public class SmsReporter implements StatusCheckReporter{
 	 * @param sb
 	 */
 	public String getReportStr(StatusCheckResult result,boolean noheader) {
-		if(result.getStatusLevel()==0){
-			return "";
-		}
-		
 		StringBuilder sb = new StringBuilder();
+		sb.append("<dl>");
 		if(!noheader){
-			
-			sb.append("〖");
+			sb.append("<dt>");
 			sb.append(result.getFuncname());
-			sb.append(":");
+			sb.append("-");
+			String statusLevelCN = "";
+			switch (result.getStatusLevel()) {
+			case 0:
+				statusLevelCN= "正常";
+				break;
+			case 1:
+				statusLevelCN =  "告警";
+				break;
+			case 2:
+				statusLevelCN = "警报";
+				break;
+			default:
+				return "未知";
+			}
+			sb.append("<b style=\"color:red\">");
+			sb.append(statusLevelCN);
+			sb.append("</b>");
+			sb.append("</dt>");
 		}
-		else{
-			sb.append("【" );
-		}
-		
 		
 		if(StringUtils.isNotBlank(result.getResultReport())){
+			sb.append("<dd>");
 			sb.append(result.getResultReport() );
+			sb.append("</dd>");
 		}
+		sb.append("<dl>");
 		List<StatusCheckResult> items = result.getSubStatusCheckResult();
 		if(!items.isEmpty()){
-			
+			sb.append("<ol>");
 			for (Iterator iterator = items.iterator(); iterator.hasNext();) {
 				StatusCheckResult statusCheckItemResult = (StatusCheckResult) iterator
 						.next();
-//				String report2 = statusCheckItemResult.getReport();
-//				sb.append("【" );
-				
+				sb.append("<li>");
 				sb.append(getReportStr(statusCheckItemResult,false));
-				
-//				sb.append("】" );
+				sb.append("</li>");
 			}
-			
+			sb.append("</ol>");
 		}
-		if(!noheader){
-			sb.append("〗");
-		}
-		else{
-			sb.append("】" );
-		}
+		
 		return sb.toString();
 	}
 	

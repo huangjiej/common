@@ -187,5 +187,19 @@ public class AbstractStatusCheckResult implements StatusCheckResult {
 				+ ", items=" + items + ", funcCode=" + funcCode + "]";
 	}
 
+	public String getStatusLevelCN(){
+		switch (statusLevel) {
+		case 0:
+			return "正常";
+		case 1:
+			return "告警";
+		case 2:
+			return "警报";
+
+		default:
+			return "正常";
+		}
+		
+	}
 
 }

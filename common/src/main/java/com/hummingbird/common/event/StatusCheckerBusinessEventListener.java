@@ -8,6 +8,8 @@ package com.hummingbird.common.event;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.hummingbird.common.face.statuscheck.AbstractStatusCheckResult;
 import com.hummingbird.common.face.statuscheck.StatusCheckResult;
 import com.hummingbird.common.face.statuscheck.StatusChecker;
@@ -22,11 +24,22 @@ import com.hummingbird.common.vo.RequestStatModel;
 public class StatusCheckerBusinessEventListener extends
 		AbstractBusinessEventListener implements StatusChecker {
 
+	org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory
+			.getLog(this.getClass());
 	private String functionName;
+	
+	private String mappingFunctionName;
 
 	public StatusCheckerBusinessEventListener(String name){
 		
 		String funcname = new PropertiesUtil().getProperty("statuscheck.func."+name);
+		String mappingfuncname = new PropertiesUtil().getProperty("statuscheck.func.mapping."+name);
+		if(StringUtils.isBlank(mappingfuncname)){
+			mappingFunctionName = "ALL";
+		}
+		else{
+			mappingFunctionName = ","+mappingfuncname+",";
+		}
 		int failprecent = new PropertiesUtil().getInt("statuscheck.failprecent."+name,50);
 		int receivespan = new PropertiesUtil().getInt("statuscheck.receivespan."+name,30*60*1000);
 		reqmodel = new RequestStatModel(funcname,failprecent,receivespan);
@@ -43,7 +56,13 @@ public class StatusCheckerBusinessEventListener extends
 	public void handleEvent(BusinessEvent event) {
 		if (event instanceof RequestEvent) {
 			RequestEvent reqe = (RequestEvent) event;
-			reqmodel.addResult(reqe);
+			if("all".equalsIgnoreCase(mappingFunctionName)||mappingFunctionName.indexOf(","+reqe.getRequestType()+",")!=-1){
+				
+				reqmodel.addResult(reqe);
+			}
+			else{
+//				log.d
+			}
 		}
 		
 	}

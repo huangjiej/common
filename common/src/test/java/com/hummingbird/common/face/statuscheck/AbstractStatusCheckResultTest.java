@@ -44,6 +44,7 @@ public class AbstractStatusCheckResultTest {
 	@Test
 	public void testGetReport() {
 		SmsReporter smsReporter = new SmsReporter();
+		HtmlReporter htmlRepoter = new HtmlReporter();
 		AbstractStatusCheckResult sr = new AbstractStatusCheckResult();
 		sr.setFunctionName("短信网关");
 		sr.setStatusLevel(0);
@@ -80,6 +81,40 @@ public class AbstractStatusCheckResultTest {
 		sr3.addItem(sub31);
 		sub31.addItem(sub32);
 		System.out.println(smsReporter.report(sr3));
+		
+		AbstractStatusCheckResult sr4 = new AbstractStatusCheckResult();
+		sr4.setFunctionName("fnbilling计费网关");
+		AbstractStatusCheckResult sub41 = new AbstractStatusCheckResult();
+		//sub41.setStatusLevel(2);
+		sub41.setFunctionName("订单");
+		AbstractStatusCheckResult sub411 = new AbstractStatusCheckResult();
+		sub411.setFunctionName("访问间隔");
+		sub411.setStatusLevel(1);
+		sub411.setReport("590秒前有访问");
+		AbstractStatusCheckResult sub412 = new AbstractStatusCheckResult();
+		sub412.setFunctionName("失败率");
+		sub412.setStatusLevel(0);
+		sub412.setReport("正常");
+		sub41.addItem(sub411);
+		sub41.addItem(sub412);
+		
+		AbstractStatusCheckResult sub42 = new AbstractStatusCheckResult();
+		sub42.setFunctionName("通知");
+		AbstractStatusCheckResult sub421 = new AbstractStatusCheckResult();
+		sub421.setFunctionName("访问间隔");
+		sub421.setStatusLevel(0);
+		sub421.setReport("59秒前有访问");
+		AbstractStatusCheckResult sub422 = new AbstractStatusCheckResult();
+		sub422.setFunctionName("失败率");
+		sub422.setStatusLevel(1);
+		sub422.setReport("失败率有增大趋势");
+		sub42.addItem(sub421);
+		sub42.addItem(sub422);
+		sr4.addItem(sub41);
+		sr4.addItem(sub42);
+		System.out.println(smsReporter.report(sr4));
+		System.out.println(htmlRepoter.report(sr4));
+		
 		
 		
 	}

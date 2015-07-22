@@ -67,19 +67,23 @@ public class EventListenerContainer {
      * @param event
      */
     public void fireEvent(BusinessEvent event) { 
-    	new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// getListenerList() Guaranteed to return a non-null array 
-				for (Iterator iterator = listenerList.iterator(); iterator.hasNext();) {
-					BusinessEventListener listener = (BusinessEventListener) iterator
-							.next();
-					listener.handleEvent(event);
-				}
-				
-			}
-		}).start();
+    	if(event!=null){
+    		new Thread(new Runnable() {
+    			
+    			@Override
+    			public void run() {
+    				// getListenerList() Guaranteed to return a non-null array 
+    				for (Iterator iterator = listenerList.iterator(); iterator.hasNext();) {
+    					BusinessEventListener listener = (BusinessEventListener) iterator
+    							.next();
+    					listener.handleEvent(event);
+    				}
+    				
+    			}
+    		}).start();
+    		
+    	}
+    	
    }
     
    public List<BusinessEventListener> getListeners(){
