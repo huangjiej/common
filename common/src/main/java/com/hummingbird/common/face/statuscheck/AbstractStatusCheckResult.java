@@ -187,6 +187,7 @@ public class AbstractStatusCheckResult implements StatusCheckResult {
 				+ ", items=" + items + ", funcCode=" + funcCode + "]";
 	}
 
+	@JsonIgnore
 	public String getStatusLevelCN(){
 		switch (statusLevel) {
 		case 0:
