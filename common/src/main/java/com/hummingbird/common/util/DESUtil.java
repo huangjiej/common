@@ -74,12 +74,24 @@ public class DESUtil {
 	}
 	
 	/**
-	 * 使用cbc,PKCS5Padding填充模式进行加密,初始向量使用密钥倒置后8个byte,此方法能与php兼容
+	 * 使用cbc,PKCS5Padding填充模式进行加密,密钥大于等于8位,只取8位,初始向量使用密钥倒置后8个byte,此方法能与php兼容
 	 * @param data
 	 * @param DESkey
 	 * @return
 	 */
 	public static String encryptDESwithCBC(String data,String DESkey) {
+		if(DESkey==null){
+			throw new RuntimeException("加密错误，密钥为空");
+		}
+		else{
+			DESkey=DESkey.trim();
+			if(DESkey.length()<8){
+				throw new RuntimeException("加密错误，密钥长度不足8位");
+			}
+			else{
+				DESkey = DESkey.substring(0,8);
+			}
+		}
 		byte[] bytes;
 		try {
 			bytes = StringUtils.reverse(DESkey).getBytes("utf8");
