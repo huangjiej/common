@@ -80,6 +80,7 @@ public class DESUtil {
 	 * @return
 	 */
 	public static String encryptDESwithCBC(String data,String DESkey) {
+		String dkey;
 		if(DESkey==null){
 			throw new RuntimeException("加密错误，密钥为空");
 		}
@@ -89,7 +90,7 @@ public class DESUtil {
 				throw new RuntimeException("加密错误，密钥长度不足8位");
 			}
 			else{
-				DESkey = DESkey.substring(0,8);
+				dkey = DESkey.substring(0,8);
 			}
 		}
 		byte[] bytes;
@@ -98,7 +99,7 @@ public class DESUtil {
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException("加密错误，字符编码转换失败："+e.getMessage(), e);
 		}
-		return encryptDes(data,DESkey,"DES/CBC/PKCS5Padding",ArrayUtils.subarray(bytes, 0, 8));
+		return encryptDes(data,dkey,"DES/CBC/PKCS5Padding",ArrayUtils.subarray(bytes, 0, 8));
 	}
 	
 	/**
@@ -108,6 +109,19 @@ public class DESUtil {
 	 * @return 解密后的数据
 	 */
 	public static String decodeDESwithCBC(String cryptData,String DESkey) {
+		String dkey;
+		if(DESkey==null){
+			throw new RuntimeException("加密错误，密钥为空");
+		}
+		else{
+			DESkey=DESkey.trim();
+			if(DESkey.length()<8){
+				throw new RuntimeException("加密错误，密钥长度不足8位");
+			}
+			else{
+				dkey = DESkey.substring(0,8);
+			}
+		}
 		byte[] bytes;
 		try {
 			bytes = StringUtils.reverse(DESkey).getBytes("utf8");
