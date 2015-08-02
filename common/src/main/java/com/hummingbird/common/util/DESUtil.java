@@ -128,7 +128,7 @@ public class DESUtil {
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException("解密错误，字符编码转换失败："+e.getMessage(), e);
 		}
-		return decodeDES(cryptData,DESkey,"DES/CBC/PKCS5Padding",ArrayUtils.subarray(bytes, 0, 8));
+		return decodeDES(cryptData,dkey,"DES/CBC/PKCS5Padding",ArrayUtils.subarray(bytes, 0, 8));
 	}
 	
 	
@@ -162,7 +162,7 @@ public class DESUtil {
 			}
 			else{
 				
-				IvParameterSpec iv2 = new IvParameterSpec(StringUtils.reverse(DESkey).getBytes("utf8"),0,8);
+				IvParameterSpec iv2 = new IvParameterSpec(iv,0,8);
 				cipher.init(Cipher.ENCRYPT_MODE, key, iv2);
 			}
 			// 加密，并把字节数组编码成字符串
@@ -317,9 +317,13 @@ public class DESUtil {
 //		System.out.println(DESUtil.encryptDes("223344", "13e998492ad888e695a431c68ac28178"));
 //		System.out.println(DESUtil.decodeDES("vxJUkQCK/v4=", "13e998492ad888e695a431c68ac28178"));
 //		System.out.println(DESUtil.encryptBasedDes("um4016091213&#$!"));
-		System.out.println(DESUtil.encryptDes("223344", "13e998492ad888e695a431c68ac28178"));
-		System.out.println(DESUtil.encryptDes("4034224aa&", "email.psw"));
-		System.out.println(DESUtil.decodeDES("AJ3QfM03nz0=", "13e998492ad888e695a431c68ac28178"));
+//		System.out.println(DESUtil.encryptDes("223344", "13e998492ad888e695a431c68ac28178"));
+		String encryptDESwithCBC = DESUtil.encryptDESwithCBC("123456", "13e998492ad888e695a431c68ac28178");
+		System.out.println(encryptDESwithCBC);
+		System.out.println(DESUtil.decodeDESwithCBC(encryptDESwithCBC, "13e998492ad888e695a431c68ac28178"));
+		
+//		System.out.println(DESUtil.encryptDes("4034224aa&", "email.psw"));
+//		System.out.println(DESUtil.decodeDES("AJ3QfM03nz0=", "13e998492ad888e695a431c68ac28178"));
 		
 		
 	}
