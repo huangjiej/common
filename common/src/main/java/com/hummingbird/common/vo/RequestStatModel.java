@@ -301,7 +301,7 @@ public class RequestStatModel {
 		array=ArrayUtils.subarray(array, array.length-4, array.length);
 		for (int i = 0; i < array.length; i++) {
 			Integer precent = (Integer)array[i];
-			if(precent<tempprecent){
+			if(precent<=tempprecent){
 				if (log.isDebugEnabled()) {
 					log.debug(String.format("查看失败率有下降,属于正常"));
 				}
