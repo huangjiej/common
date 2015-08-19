@@ -111,12 +111,12 @@ public class DESUtil {
 	public static String decodeDESwithCBC(String cryptData,String DESkey) {
 		String dkey;
 		if(DESkey==null){
-			throw new RuntimeException("加密错误，密钥为空");
+			throw new RuntimeException("解密错误，密钥为空");
 		}
 		else{
 			DESkey=DESkey.trim();
 			if(DESkey.length()<8){
-				throw new RuntimeException("加密错误，密钥长度不足8位");
+				throw new RuntimeException("解密错误，密钥长度不足8位");
 			}
 			else{
 				dkey = DESkey.substring(0,8);
@@ -318,7 +318,7 @@ public class DESUtil {
 //		System.out.println(DESUtil.decodeDES("vxJUkQCK/v4=", "13e998492ad888e695a431c68ac28178"));
 //		System.out.println(DESUtil.encryptBasedDes("um4016091213&#$!"));
 //		System.out.println(DESUtil.encryptDes("223344", "13e998492ad888e695a431c68ac28178"));
-		String encryptDESwithCBC = DESUtil.encryptDESwithCBC("123456", "13e998492ad888e695a431c68ac28178");
+		String encryptDESwithCBC = DESUtil.encryptDESwithCBC("123456", "a75129ada6d5735d314382c8702beacc");
 		System.out.println(encryptDESwithCBC);
 		System.out.println(DESUtil.decodeDESwithCBC(encryptDESwithCBC, "13e998492ad888e695a431c68ac28178"));
 		

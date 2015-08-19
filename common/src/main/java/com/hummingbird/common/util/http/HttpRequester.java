@@ -177,7 +177,11 @@ public class HttpRequester {
 			throw new RequestException("请求失败，协议不正确",e);
 //			e.printStackTrace();
 //			return null;
-		} catch (IOException e) {
+		} 
+		catch(java.net.ConnectException e){
+			throw new RequestException("访问被拒绝",e);
+		}
+		catch (IOException e) {
 //			Logger.d(TAG, "json post request IOException");
 //			e.printStackTrace();
 			throw new RequestException("请求出错",e);
