@@ -232,7 +232,7 @@
 		</plugin> 
 		</plugins>
 	</build>
-	<repositories>
+<repositories>
 	<repository>   
     <id>releases</id>
     <releases><enabled>true</enabled></releases>
@@ -246,4 +246,16 @@
     <url>http://121.199.3.89:8081/nexus/content/repositories/snapshots</url>   
 	</repository>
 	</repositories>
+	<distributionManagement>
+    <repository>
+        <id>releases</id>
+        <name>dy_nexus_hosted_release</name>
+        <url>http://121.199.3.89:8081/nexus/content/repositories/releases</url>
+    </repository>
+    <snapshotRepository>
+        <id>snapshots</id>
+        <name>dy_nexus_hosted_snapshot</name>
+        <url>http://121.199.3.89:8081/nexus/content/repositories/snapshots</url>
+    </snapshotRepository>
+</distributionManagement>
 </project>
