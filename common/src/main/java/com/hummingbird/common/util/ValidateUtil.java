@@ -1,9 +1,14 @@
 package com.hummingbird.common.util;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -192,5 +197,83 @@ public abstract class ValidateUtil {
 		}
 		
 	}
+	
+	/**
+	 * 生成签名明文
+	 * @param obj
+	 * @return
+	 * @throws DataInvalidException
+	 */
+	public static String getPaintText(Object obj) throws DataInvalidException{
+
+		StringBuilder str = new StringBuilder();
+		//空对象
+		if (obj == null) {
+			return "";
+		}
+		//基本对象
+		if (obj instanceof String || obj instanceof Number
+				|| obj instanceof Boolean || obj instanceof Character) {
+			str.append(obj.toString());
+		} else if (obj.getClass().isArray()) {
+			//数组,处理内部,并排序
+			Object[] objarr = (Object[]) obj;
+			List<String> ptlist = new ArrayList<String>();
+			for (int j = 0; j < objarr.length; j++) {
+				Object object = objarr[j];
+				ptlist.add(getPaintText(object));
+			}
+			str.append(sortbyValues(ptlist));
+		} else if (obj instanceof Date) {
+			Date date = (Date) obj;
+			String time = DateUtil.formatCommonDate(date);
+			str.append(time);
+		} else if (obj instanceof Collection) {
+			//数组,处理内部,并排序
+			Collection lll = (Collection) obj;
+			List<String> ptlist = new ArrayList<String>();
+			for (Iterator iterator = lll.iterator(); iterator.hasNext();) {
+				Object object = (Object) iterator.next();
+				ptlist.add(getPaintText(object));
+			}
+			str.append(sortbyValues(ptlist));
+
+		} else if (obj instanceof Map) {
+			//数组,处理内部,并排序
+			Map m = (Map) obj;
+			Set entrySet = m.entrySet();
+			List<String> ptlist = new ArrayList<String>();
+			for (Iterator iterator = entrySet.iterator(); iterator.hasNext();) {
+				Map.Entry en = (Map.Entry) iterator.next();
+				ptlist.add(getPaintText(en.getValue()));
+
+			}
+			str.append(sortbyValues(ptlist));
+
+		} else {
+			Class classType = obj.getClass();
+			Field[] fileds = classType.getDeclaredFields();// 得到实体的所有属性
+			List<String> ptlist = new ArrayList<String>();
+			for (int i = 0; i < fileds.length; i++) {
+				fileds[i].setAccessible(true);
+				Object o;
+				try {
+					o = fileds[i].get(obj);
+					ptlist.add(getPaintText(o));
+
+				} catch (Exception e) {
+					log.error("获取bean的字段进行生成明文出错",e);
+					throw  ValidateException.ERROR_PARAM_FORMAT_ERROR.clone(e,"获取bean的字段进行生成明文出错");
+				}
+
+			}
+			str.append(sortbyValues(ptlist));
+
+		}
+		return str.toString();
+	
+	}
+
+
 	
 }

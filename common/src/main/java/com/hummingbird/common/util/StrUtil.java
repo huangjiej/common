@@ -180,5 +180,20 @@ public class StrUtil {
 		System.out.println(response);
 		System.out.println(deleteWhitespace);
 	}
+	
+	/**
+	 * 创建字符串
+	 * @param strings
+	 * @return
+	 */
+	public static String buildStr(String ... strings ) {
+		StringBuilder sb= new StringBuilder(200);
+		for (int i = 0; i < strings.length; i++) {
+			
+			String string = strings[i];
+			sb.append(string);
+		}
+		return sb.toString();
+	}
 
 }
