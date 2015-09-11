@@ -2,9 +2,11 @@ package com.hummingbird.common.vo;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -139,8 +141,19 @@ public class ResultModel extends HashMap{
 	}
 	@Override
 	public String toString() {
-		return "ResultModel [errcode=" + errcode + ", errmsg=" + errmsg
-				 + "]";
+		StringBuilder sb = new StringBuilder();
+		sb.append("ResultModel [");
+		for (Iterator iterator = this.keySet().iterator(); iterator.hasNext();) {
+			Map.Entry en = (Map.Entry) iterator.next();
+			Object key = en.getKey();
+			Object value = en.getValue();
+			sb.append(key);
+			sb.append("=");
+			sb.append(value);
+			sb.append(",");
+		}
+		sb.append("]");
+		return sb.toString();
 	}
 	
 	/**
