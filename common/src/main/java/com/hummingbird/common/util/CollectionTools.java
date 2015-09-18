@@ -339,10 +339,36 @@ public abstract class CollectionTools {
 		}
 		return comparatorChain;
 	}
+	/**
+	 * 转换列表
+	 * @param oriList
+	 * @param targetclass
+	 * @param convertor
+	 * @return
+	 */
+	public static <T,D> List<D> convertCollection(List<T> oriList, Class<D> targetclass,CollectionElementConvertor<T,D> convertor) {
+		if(isEmpty(oriList)){
+			return Collections.EMPTY_LIST;
+		}
+		List<D> list = new ArrayList<D>();
+		for (Iterator iterator = oriList.iterator(); iterator.hasNext();) {
+			T t = (T) iterator.next();
+			D convert = convertor.convert(t);
+			list.add(convert);
+		}
+		return list;
+	}
 	
     
     
-    
+    /**
+     * @author john huang
+     * 2015年9月19日 上午6:42:47
+     * 本类主要做为 转换器
+     */
+    public static interface CollectionElementConvertor<Ori,Desc>{
+    	public Desc convert(Ori ori);
+    }
     
 }
 
