@@ -143,7 +143,7 @@ public class ResultModel extends HashMap{
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("ResultModel [");
-		for (Iterator iterator = this.keySet().iterator(); iterator.hasNext();) {
+		for (Iterator iterator = this.entrySet().iterator(); iterator.hasNext();) {
 			Map.Entry en = (Map.Entry) iterator.next();
 			Object key = en.getKey();
 			Object value = en.getValue();

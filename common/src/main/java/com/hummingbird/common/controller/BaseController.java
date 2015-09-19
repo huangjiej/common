@@ -23,6 +23,7 @@ import com.hummingbird.common.event.BusinessEventListener;
 import com.hummingbird.common.event.EventListenerContainer;
 import com.hummingbird.common.event.StatusCheckerBusinessEventListener;
 import com.hummingbird.common.exception.ValidateException;
+import com.hummingbird.common.face.Pagingnation;
 import com.hummingbird.common.face.statuscheck.AbstractStatusCheckResult;
 import com.hummingbird.common.face.statuscheck.StatusCheckResult;
 import com.hummingbird.common.util.RequestUtil;
@@ -158,6 +159,18 @@ public class BaseController {
     	return rm;
     }
 	
+	/**
+	 * 合并输出
+	 * @param rm
+	 * @param pagingnation
+	 * @param orders
+	 */
+	protected void mergeListOutput(ResultModel rm, Pagingnation pagingnation, List orders) {
+		rm.put("pageSize", pagingnation.getPageSize());
+		rm.put("pageIndex", pagingnation.getCurrPage());
+		rm.put("total", pagingnation.getTotalCount());
+		rm.put("list", orders);
+	} 
 	
 }
 

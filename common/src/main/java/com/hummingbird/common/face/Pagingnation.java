@@ -33,7 +33,9 @@ public class Pagingnation {
      */
     public static Pagingnation non_pageControl()
     {
-    	return new Pagingnation();
+    	Pagingnation pc = new Pagingnation();
+		pc.setCountsize(false);
+		return pc;
     }
     
     /**
@@ -199,7 +201,7 @@ public class Pagingnation {
 	/**
      *重新计算总页数 
      */
-    protected void calculatePageCount()
+    public void calculatePageCount()
     {
     	pageCount=(totalCount+pageSize-1)/pageSize;
     	if(pageCount==0)
