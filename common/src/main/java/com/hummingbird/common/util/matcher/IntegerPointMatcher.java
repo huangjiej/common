@@ -15,7 +15,7 @@ import com.hummingbird.common.exception.ValidateException;
  * 2015年1月14日 上午8:49:51
  * 本类主要做为 整数的单数值匹配
  */
-public class IntegerPointMatcher extends AbstractMatcher {
+public class IntegerPointMatcher extends AbstractMatcher  {
 	
 	/**
 	 * 初始化格式
@@ -55,6 +55,22 @@ public class IntegerPointMatcher extends AbstractMatcher {
 		}
 		return false;
 	}
+	
+	/**
+	 * 取开始数值，应该使用 >=
+	 * @return
+	 */
+	public int getStartInt(){
+		return pointInt;
+	} 
+	
+	/**
+	 * 取结束数值，应该使用 <=
+	 * @return
+	 */
+	public int getEndInt(){
+		return pointInt;
+	} 
 	
 	
 }

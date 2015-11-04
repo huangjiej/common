@@ -23,15 +23,32 @@ import com.hummingbird.common.event.BusinessEventListener;
 import com.hummingbird.common.event.EventListenerContainer;
 import com.hummingbird.common.event.StatusCheckerBusinessEventListener;
 import com.hummingbird.common.exception.ValidateException;
+import com.hummingbird.common.face.AbstractAppLog;
 import com.hummingbird.common.face.Pagingnation;
 import com.hummingbird.common.face.statuscheck.AbstractStatusCheckResult;
 import com.hummingbird.common.face.statuscheck.StatusCheckResult;
 import com.hummingbird.common.util.RequestUtil;
+import com.hummingbird.common.vo.ControllerModel;
 import com.hummingbird.common.vo.ResultModel;
 
 @Controller
 public class BaseController {
+	
+	public ResultModel rmodel=new ResultModel();
+	
 	protected  final Log log = LogFactory.getLog(getClass());
+	
+	/**
+	 * 控制器对象本地线程
+	 */
+	protected static ThreadLocal<ControllerModel> cmTL = new ThreadLocal<ControllerModel>();
+	
+	public void prepareParameter(String jsonstr){
+		ControllerModel cm = cmTL.get();
+		cm.setJsonstr(jsonstr);
+		
+	}
+	
 	
 	/**
 	 * 返回日志，拦截器调用
@@ -170,7 +187,107 @@ public class BaseController {
 		rm.put("pageIndex", pagingnation.getCurrPage());
 		rm.put("total", pagingnation.getTotalCount());
 		rm.put("list", orders);
+	}
+	
+	private ControllerModel getControllerModel(){
+		ControllerModel cm = cmTL.get();
+		if(cm==null){
+			cm = new ControllerModel();
+			cmTL.set(cm);
+		}
+		return cm;
+	}
+
+
+	/**
+	 * 初始化结果
+	 * @param rm
+	 */
+	public void prepareResultModel(ResultModel rm) {
+		ControllerModel cm = getControllerModel();
+		
+		cm.setResultModel(rm);
+		
+	}
+
+
+	/**
+	 * @param transorder
+	 */
+	public void prepareParameterObject(Object transorder) {
+		ControllerModel cm = getControllerModel();
+		cm.setTransorder(transorder);
+		
+	}
+
+
+	/**
+	 * 获取ResultModel
+	 * @return
+	 */
+	public ResultModel getResultModel() {
+		ControllerModel cm = getControllerModel();
+		ResultModel resultModel = cm.getResultModel();
+		if(resultModel==null)
+		{
+			resultModel = new ResultModel();
+		}
+		return resultModel;
 	} 
+	
+	/**
+	 * 获取 转化后的对象
+	 * @return
+	 */
+	public Object getParameterObject() {
+		ControllerModel cm = getControllerModel();
+		return cm.getTransorder();
+	} 
+	
+	/**
+	 * 获取 json字符串
+	 * @return
+	 */
+	public Object getParameterJsonStr() {
+		ControllerModel cm = getControllerModel();
+		return cm.getJsonstr();
+	}
+
+	/**
+	 * 添加app日志
+	 * @param rnr
+	 */
+	public void prepareAppLog(AbstractAppLog rnr) {
+		ControllerModel cm = getControllerModel();
+		cm.setApplog(rnr);
+	}
+	
+	/**
+	 * 写入应用日志
+	 * @param responsestr
+	 */
+	public void writeAppLog(String responsestr){
+		ControllerModel cm = getControllerModel();
+		AbstractAppLog applog = cm.getApplog();
+		if(applog!=null){
+			applog.setRespone(responsestr);
+			writeAppLog(applog);
+		}
+		
+	}
+
+
+	/**
+	 * 写日志,需要由子类实现
+	 * @param applog
+	 */
+	protected void writeAppLog(AbstractAppLog applog) {
+		if (log.isDebugEnabled()) {
+			log.debug(String.format("写app日志的功能尚未实现"));
+		}
+		
+	}
+	 
 	
 }
 
