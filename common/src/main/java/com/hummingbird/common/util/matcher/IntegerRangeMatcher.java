@@ -43,6 +43,8 @@ public class IntegerRangeMatcher extends IntegerPointMatcher{
 			else{
 				isrange=false;
 				super.initPattern(pattern);
+				startInt = super.pointInt;
+				endInt = super.pointInt;
 			}
 	}
 	
@@ -88,5 +90,20 @@ public class IntegerRangeMatcher extends IntegerPointMatcher{
 		return false;
 	}
 	
+	/**
+	 * 取开始数值，应该使用 >=
+	 * @return
+	 */
+	public int getStartInt(){
+		return startInt;
+	} 
+	
+	/**
+	 * 取结束数值，应该使用 <=
+	 * @return
+	 */
+	public int getEndInt(){
+		return endInt;
+	} 
 	
 }

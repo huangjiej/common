@@ -44,5 +44,24 @@ public class IntegerMatcher extends AbstractMatcher {
 		
 	}
 	
+	/**
+	 * 获取得到的范围比较器
+	 * @return
+	 */
+	public List<IntegerRangeMatcher> getMatchers(){
+		List <IntegerRangeMatcher> list = new ArrayList<IntegerRangeMatcher>();
+		for (Iterator iterator = matchers.iterator(); iterator.hasNext();) {
+			AbstractMatcher abstractMatcher = (AbstractMatcher) iterator.next();
+			if (abstractMatcher instanceof IntegerRangeMatcher) {
+				IntegerRangeMatcher irm = (IntegerRangeMatcher) abstractMatcher;
+				list.add(irm);
+				
+			}
+		}
+		return list;
+	}
+	
+	
+	
 
 }
