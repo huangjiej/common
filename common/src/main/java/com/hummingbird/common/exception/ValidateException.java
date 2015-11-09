@@ -190,6 +190,9 @@ public class ValidateException extends BusinessException {
 	 */
 	public static final DataInvalidException 	 ERROR_USER_ALREADY_AUTHED=new DataInvalidException(10706, "用户已认证");
 	
+	//10707,10708 作为token的错误,token请使用commonbiz 中的tokenException
+	 
+	
 	/**
 	 * 系统内部错误
 	 */
@@ -209,8 +212,6 @@ public class ValidateException extends BusinessException {
 	 * 参数值为空
 	 */
 	public static final DataInvalidException 	 ERROR_PARAM_NULL=new DataInvalidException(10103, "【${msg}】参数值为空");
-	
-	
 	
 	
 	/**

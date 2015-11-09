@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.BadSqlGrammarException;
 
 import com.hummingbird.common.exception.BusinessException;
@@ -47,6 +48,9 @@ public class ResultModel extends HashMap{
 	private int baseerrcode;
 	
 
+	public int getBaseerrcode() {
+		return baseerrcode;
+	}
 	/**
 	 * 统计耗时
 	 * @return
@@ -195,6 +199,12 @@ public class ResultModel extends HashMap{
 			errmsg = "内部访问失败";
 			Log log = LogFactory.getLog(this.getClass());
 			log.error("空指针错误",e);
+		}
+		else if(e instanceof DataIntegrityViolationException){
+			errcode = 10801;
+			errmsg = "数据库访问失败";
+			Log log = LogFactory.getLog(this.getClass());
+			log.error("数据异常",e);
 		}
 		else if(e instanceof ValidateException){
 			ValidateException ve = (ValidateException) e;
